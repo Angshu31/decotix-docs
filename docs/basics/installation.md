@@ -47,7 +47,7 @@ Now, **_delete the `prisma/schema.prisma` file (but keep the `prisma` directory)
 
 ## Building the Schema
 
-We've setup decotix up, but now it's time to use it. To do this, we have to create a file that builds the schema for us:
+We've set decotix up, but now it's time to use it. To do this, we have to create a file that builds the schema for us:
 
 **_`src/buildSchema.ts`_**:
 
