@@ -10,8 +10,7 @@ A relation is defined by the `@Relation()` decorator.
 
 ### The hard way
 
-```ts
-// src/models/Profile.ts
+```ts title="src/models/Profile.ts"
 import { Model, Property, Relation } from "decotix";
 
 export class Profile {
@@ -26,8 +25,7 @@ export class Profile {
 }
 ```
 
-```ts
-// src/models/User.ts
+```ts title="src/models/User.ts"
 import { Model, Property } from "decotix";
 import { Profile } from "./Profile";
 
@@ -61,9 +59,7 @@ Because this kind of relation is redundant to type out every time.
 
 When you pass no arguments to the `@Relation()` decorator, it automatically makes the relation for you:
 
-```ts
-// src/models/Profile.ts
-
+```ts title="src/models/Profile.ts"
 export class Profile {
   // ...
 
@@ -77,7 +73,7 @@ export class Profile {
 **_`src/models/User.ts` remains the same_**  
 **_Output remains the same_**
 
-:::danger
+:::caution
 Automated relations do not work if the target model (in this case `User`) has an ID field that is named something other than `id`. It also doesn't work with models if they only have unique fields, coumpund uniques or composite IDs. If that is the case for you, use this shortcut instead:
 
 ```ts
