@@ -13,7 +13,7 @@ Always use optional fields for relational fields.
 Just use `?:` instead of `:` for the TS field definition.
 E.g. `user?: User`. You are not required to put `{ nullable: true }` (unless you want it to be reflected as nullable in the schema)
 
-Field should be optional to match Prisma client, not doing this can result in troublesome TS type conflicts.
+This is done to match Prisma client, not doing this can result in troublesome type conflicts - and some painful debugging.
 :::
 
 ### The hard way
