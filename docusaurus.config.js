@@ -56,7 +56,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Bedanta Mukhopadhay (Angshu31)`,
+      copyright: `Copyright © ${new Date().getFullYear()} Bedanta Mukhopadhay`,
     },
     prism: {
       theme: codeTheme,
