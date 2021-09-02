@@ -16,7 +16,7 @@ E.g. `user?: User`. You are not required to put `{ nullable: true }` (unless you
 This is done to match Prisma client, not doing this can result in troublesome type conflicts - and some painful debugging.
 :::
 
-### The hard way
+### The normal way
 
 ```ts title="src/models/Profile.ts"
 import { Model, Property, Relation } from "decotix";
@@ -81,7 +81,11 @@ export class Profile {
 **_`src/models/User.ts` remains the same_**  
 **_Output remains the same_**
 
-:::caution
+:::tip
+To learn more about Autofilled Relations, [click here](../advanced/autofilled-relations);
+:::
+
+<!-- :::caution
 Automated relations do not work if the target model (in this case `User`) has an ID field that is named something other than `id`. It also doesn't work with models if they only have unique fields, coumpund uniques or composite IDs. If that is the case for you, use this shortcut instead:
 
 ```ts
@@ -98,4 +102,4 @@ userId1 String
 userId2 String
 ```
 
-:::
+::: -->

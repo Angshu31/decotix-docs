@@ -2,8 +2,6 @@
 sidebar_position: 0
 ---
 
-import "../../src/css/advanced-relations.css";
-
 # More on relations
 
 ## Typing Arguments
@@ -21,6 +19,8 @@ impossilbe to achieve, but it does catch simple errors.
 
 Arguments with a `:` before them are named arguments that have a `argName: ` go before the value in the prisma schema (e.g. `fields: []`)
 All other arguments are postional and do not require such prefixes.
+
+These examples include ways to autofill relations, you can learn more about this in [Autofilled Relations](./autofilled-relations)
 
 ### `@relation(:fields, :references)`
 
