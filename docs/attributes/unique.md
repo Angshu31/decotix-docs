@@ -7,6 +7,8 @@ sidebar_position: 0
 Just use `@Unique()`.
 
 ```ts
+import { Unique, Property } from "decotix";
+
 @Unique()
 @Property()
 field: string
