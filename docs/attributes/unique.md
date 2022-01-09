@@ -4,10 +4,12 @@ sidebar_position: 0
 
 # Uniques
 
-Just use `@Unique()`.
+Use `@Unique()`.
 
 ```ts
 import { Unique, Property } from "decotix";
+
+// ...
 
 @Unique()
 @Property()

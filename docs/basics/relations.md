@@ -4,102 +4,97 @@ sidebar_position: 3
 
 # Relations
 
-A relation is defined by the `@Relation()` decorator.
+Relations in decotix are designed to be significantly different from the way you may be used to writing them. Instead, Decotix takes an approach similar to other libraries like TypeORM.
 
-## Writing a simple relation
+## The basics (for all relations)
 
-:::caution Optional field for relations
-Always use optional fields for relational fields.
-Just use `?:` instead of `:` for the TS field definition.
-E.g. `user?: User`. You are not required to put `{ nullable: true }` (unless you want it to be reflected as nullable in the schema)
+Unlike prisma, you have to define a relationship on both sides.
 
-This is done to match Prisma client, not doing this can result in troublesome type conflicts - and some painful debugging.
-:::
+Arguments:
 
-### The normal way
+- `type`: A function that returns the type of the related entity.
+- `inverse`: The property on the related entity that will be set to this entity.
 
-```ts title="src/models/Profile.ts"
-import { Model, Property, Relation } from "decotix";
+By taking a look at the examples below, you can hopefully see that defining relations in Decotix is very simple and intuitive.
 
-export class Profile {
-  // ...
+## One-to-One
+
+How to create a one-to-one relationship:
+
+```typescript title="src/models/user.ts"
+@Entity()
+class User {
+  @Id()
+  id: string;
 
   @Property()
-  @Relation({ fields: ["userId"], references: ["id"] })
+  @OneToOne(() => Profile, (profile) => profile.user)
+  profile?: Profile;
+}
+```
+
+```typescript title="src/models/profile.ts"
+@Entity()
+class Profile {
+  @Id()
+  id: string;
+
+  @Property()
+  @OneToOne(() => User, (user) => user.profile)
   user?: User;
+}
+```
+
+::caution
+Always set relational fields as optional. Like the examples above, make sure you use `?:` when defining the fields. The reason for this is to avoid conflicts between the decotix and prisma types.
+::
+
+# Many-To-One / One-To-Many
+
+```typescript title="src/models/author.ts"
+@Entity()
+class Author {
+  @Id()
+  id: string;
 
   @Property()
-  userId?: string;
+  @OneToMany(() => Book, (book) => book.author)
+  books?: Book[];
 }
 ```
 
-```ts title="src/models/User.ts"
-import { Model, Property } from "decotix";
-import { Profile } from "./Profile";
+```typescript title="src/models/book.ts"
+@Entity()
+class Book {
+  @Id()
+  id: string;
 
-@Model()
-export class User {
-  // ...
-
-  @Property(() => Profile)
-  profile: Profile;
+  @Property()
+  @ManyToOne(() => Author, (author) => author.books)
+  author?: Author;
 }
 ```
 
-Output:
+# Many-to-Many
 
-```prisma
-model User {
-  // ...
-  profile Profile
-}
+```typescript title="src/models/post.ts"
+@Entity()
+class Post {
+  @Id()
+  id: string;
 
-model Profile {
-  // ...
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  @ManyToMany(() => Category, (category) => category.posts)
+  categories?: Category[];
 }
 ```
 
-### The easy way
+```typescript title="src/models/category.ts"
+@Entity()
+class Post {
+  @Id()
+  id: string;
 
-Because this kind of relation is redundant to type out every time.
-
-When you pass no arguments to the `@Relation()` decorator, it automatically makes the relation for you:
-
-```ts title="src/models/Profile.ts"
-export class Profile {
-  // ...
-
-  // automates the relation, `userId` field is also automated so we can remove that from our code.
-  @Relation()
-  @Property(() => User)
-  user: User;
+  @ManyToMany(() => Post, (post) => post.categories)
+  posts?: Post[];
 }
 ```
-
-**_`src/models/User.ts` remains the same_**  
-**_Output remains the same_**
-
-:::tip
-To learn more about Autofilled Relations, [click here](../advanced/autofilled-relations);
-:::
-
-<!-- :::caution
-Automated relations do not work if the target model (in this case `User`) has an ID field that is named something other than `id`. It also doesn't work with models if they only have unique fields, coumpund uniques or composite IDs. If that is the case for you, use this shortcut instead:
-
-```ts
-@Relation(["id1", "id2"])
-@Property(() => User)
-user?: User;
-```
-
-The array passed is the `references: []` part of the relation. The rest (including the `userId1` and the `userId2`) will be autofilled.
-
-```prisma
-user    User   @relation(fields: [userId1, userId2], references: [id1, id2])
-userId1 String
-userId2 String
-```
-
-::: -->
