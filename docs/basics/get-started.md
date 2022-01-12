@@ -58,6 +58,17 @@ export class Profile {
 }
 ```
 
+```ts title="src/buildPrismaSchema.ts"
+import { buildSchema } from "decotix";
+import { join } from "path";
+
+buildSchema({
+  input: [join(__dirname, "./models/*.*")],
+  baseSchemas: [join(__dirname, "../base.prisma")],
+  emitTo: join(__dirname, "../prisma/schema.prisma"),
+});
+```
+
 Output:
 
 ```prisma title="prisma/schema.prisma"

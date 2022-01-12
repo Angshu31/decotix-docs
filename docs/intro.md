@@ -47,16 +47,13 @@ id String @id @default(dbgenerated()) @map("_id") @db.ObjectId
 To anyone who has ever used the above features, the code snippets should look incredibly familiar. Decotix knows that, allowing you to write less boilerplate code:
 
 ```ts
-@Relation()
-@Property(() => User)
-user?: User;
+class Profile {
+    @OneToOne(() => User, user => user.profile)
+    user?: User;
+}
 ```
 
-```ts
-@MongoID()
-@Property()
-id: string;
-```
+**The Summary**: Decotix simplifies a lot of the prisma schema's problems. These problems usually only come to a noticable effect at larger projects, where there are a lot of relations and a lot of models that are simply impossible to manage in one file.
 
 ## When not to use Decotix
 
