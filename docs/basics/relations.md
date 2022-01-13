@@ -27,7 +27,6 @@ class User {
   @Id()
   id: string;
 
-  @Property()
   @OneToOne(() => Profile, (profile) => profile.user)
   profile?: Profile;
 }
@@ -39,7 +38,6 @@ class Profile {
   @Id()
   id: string;
 
-  @Property()
   @OneToOne(() => User, (user) => user.profile)
   user?: User;
 }
@@ -57,7 +55,6 @@ class Author {
   @Id()
   id: string;
 
-  @Property()
   @OneToMany(() => Book, (book) => book.author)
   books?: Book[];
 }
@@ -69,7 +66,6 @@ class Book {
   @Id()
   id: string;
 
-  @Property()
   @ManyToOne(() => Author, (author) => author.books)
   author?: Author;
 }
