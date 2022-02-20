@@ -47,7 +47,7 @@ class Profile {
 Always set relational fields as optional. Like the examples above, make sure you use `?:` when defining the fields. The reason for this is to avoid conflicts between the decotix and prisma types.
 ::
 
-# Many-To-One / One-To-Many
+## Many-To-One / One-To-Many
 
 ```typescript title="src/models/author.ts"
 @Entity()
@@ -71,7 +71,7 @@ class Book {
 }
 ```
 
-# Many-to-Many
+## Many-to-Many
 
 ```typescript title="src/models/post.ts"
 @Entity()
