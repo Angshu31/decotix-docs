@@ -31,7 +31,7 @@ export class User {
   @Property()
   name: string;
 
-  @Property(() => Profile, { nullable: true })
+  @OneToOne(() => Profile, profile => profile.user)
   profile?: Profile;
 }
 ```
@@ -52,8 +52,7 @@ export class Profile {
   @Property(() => Int)
   age: string;
 
-  @Relation()
-  @Property(() => User)
+  @OneToOne(() => User, user => user.profile)
   user?: User;
 }
 ```
