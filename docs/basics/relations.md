@@ -86,7 +86,7 @@ class Post {
 
 ```typescript title="src/models/category.ts"
 @Entity()
-class Post {
+class Category {
   @Id()
   id: string;
 
